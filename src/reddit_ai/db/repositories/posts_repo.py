@@ -16,6 +16,7 @@ def _build_update(doc : dict[str, Any]) -> UpdateOne :
                           "created_utc": doc.get("created_utc"),
                           "permalink": doc.get("permalink"),
                           "first_seen_at": ts_now(),
+                          "time_filter": doc.get("time_filter")
                           },
         "$set": { "title": doc.get("title"),
                   "selftext": doc.get("selftext"),
@@ -26,7 +27,6 @@ def _build_update(doc : dict[str, Any]) -> UpdateOne :
                     "ingested_at": doc.get("ingested_at", ts_now()),  # ingestion timestamp
                     "last_seen_at": ts_now(),
                     "listing": listing,
-                    "time_filter": doc.get("time_filter")
                 },
         "$max": { "score_max": int(doc.get("score", 0)),
                   "num_comments_max": int(doc.get("num_comments", 0))

@@ -30,9 +30,9 @@ from src.reddit_ai.collectors.comments import fetch_comments_details
 from src.reddit_ai.db.repositories.posts_repo import upsert_posts
 from src.reddit_ai.db.repositories.comments_repo import upsert_comments
 from src.reddit_ai.db.mongo import get_db, ensure_indexes
-from src.reddit_ai.config import REDDIT
-import praw
-reddit= praw.Reddit(**REDDIT)
+from  src.reddit_ai.collectors.reddit_client import get_reddit_client
+
+reddit= get_reddit_client()
 # for doc in fetch_posts_details(reddit, "Artificial", listing="top", limit=1,window_days=1):
 #     print(doc ,'\n') # or send to your repo upsert
     
@@ -59,21 +59,22 @@ reddit= praw.Reddit(**REDDIT)
 # all_comments = submission.comments.list()
 # comment= all_comments[0]
 # pprint({k: v for k, v in vars(comment).items() if not k.startswith("_")})
-db = get_db()
-ensure_indexes(db)
+
 
 posts_iter = list(fetch_posts_details(
-    reddit, "Artificial",
-    listing="top", time_filter="day", limit=300, window_days=14
+    reddit, ["technology","chatgpt","Artificial"],
+    listing="top", time_filter="day", limit=1, window_days=14
 ))
-stats = upsert_posts(db, posts_iter, batch_size=500)
+
 for post in posts_iter:
+    print(post ,'\n') # or send to your repo upsert
     comment_iter = fetch_comments_details(
         reddit, post["post_id"],
-        sort="new", cap=500, limit=100,
+        sort="new", cap=2, limit=1,
         top_level_only=False, skip_bots=True, english_only=True,
         debug_samples=2
     )
+    for comment in comment_iter:
+        print(comment ,'\n') # or send to your repo upsert
 
-    stats = upsert_comments(db, comment_iter, batch_size=500)
 

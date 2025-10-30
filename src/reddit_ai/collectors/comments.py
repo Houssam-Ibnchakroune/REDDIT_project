@@ -44,7 +44,7 @@ def fetch_comments_details(
     if sort == "best":
         sort = "confidence"
 
-    valid_sorts = {"top", "new", "old", "qa", "controversial","confidence"}
+    valid_sorts = {"top", "new", "old", "qa", "controversial","confidence","hot"}
     if sort not in valid_sorts:
         logger.error("Failed to access comments of post r/%s | Invalid sort '%s'. Expected one of %s.", post_id, sort, valid_sorts)
         raise ValueError(f"Invalid sort '{sort}'. Expected one of {valid_sorts}.")
@@ -122,7 +122,7 @@ def fetch_comments_details(
             if stats["seen"] % 50 == 0:
                     time.sleep(0.2)
         except Exception as e:
-            logger.exception("Error processing comment in post %s: %s", post_id, e)       
+            logger.exception("Error processing comment in post %s : %s", post_id, e)
 
     logger.info("Finished post %s (r/%s) | seen=%d yielded=%d skipped(removed=%d, bots=%d, lang=%d)",
             post_id, submission.subreddit.display_name,
