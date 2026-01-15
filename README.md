@@ -315,7 +315,7 @@ Les contributions sont les bienvenues.  Pour contribuer:
 
 Ce projet est à usage éducatif et de recherche. 
 
-## Auteur
+## Auteurs
 
 Houssam Ibnchakroune & Adam Fartout
 
