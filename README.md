@@ -317,7 +317,7 @@ Ce projet est à usage éducatif et de recherche.
 
 ## Auteurs
 
-Houssam Ibnchakroune & Adam Fartout
+Houssam Ibnchakroune 
 
 ## Notes Importantes
 
